@@ -1,0 +1,37 @@
+high
+low
+ridge
+trough
+cold
+hot
+warm
+snow
+ice
+freeze
+sleet
+rain
+thunderstorms
+cell
+supercell
+tornado
+hurricane
+lightning
+clouds
+water
+water vapor
+fog
+mist
+drizzle
+north
+south
+east
+west
+light
+rainbow
+mcv
+mcc
+mcs
+squall line
+hail
+high wind
+line echo wave pattern

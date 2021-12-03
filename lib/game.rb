@@ -1,65 +1,65 @@
-require 'csv'
 
 
-
-class HangmanGame
+class Hangman
 
     def initialize
-        @display_blank = "_" * secret_words.length
-        @guess_word = []
+        @letter_bank = ('a'..'z').to_a
+        @word = word_bank.sample
+        @attempts = 10
+        @blank_spaces = "_" * @word.length
     end
 
-    def secret_words
-        selector = File.readlines("random_text.txt")
-        secret_word = selector[rand(61404)]
-        secret_word.strip
+    def input_number(input)
+        input.to_i - 1
+    end
+        
+
+    def word_bank
+        %w[the then buy pop ridge trough low high cold hot] #file text would go here
     end
 
-    def word_selection
-        if secret_words.length >=5 && secret_words.length <= 12
-            secret_words
+    def menu
+        #to be finished at the end
+    end
+
+    def guesses(letter)
+
+        if @word.include? letter
+            p "correct!"
+            @blank_spaces.length.times do |index|
+                @blank_spaces[index] = letter if letter == @word[index]
+            end
+            @letter_bank.delete(letter)
         else
-            "rhythm"
+            @attempts -= 1
+            puts "you have #{@attempts} attempts remaining"
         end
     end
 
-    def word_to_array
-        new_word_array = word_selection.split(//)
-        @guess_word << new_word_array
-        @guess_word
+    def play
+
+        until @blank_spaces == @word do
+            # p @word
+            p @letter_bank
+            puts "Choose a letter: "
+            letter = gets.chomp
+
+            if @attempts > 0 
+                guesses(letter)
+                p "#{@blank_spaces}"
+                
+            else @attempts == 0
+                puts "game over"
+            end
+        end
     end
 
-    def display_word
-        new_display_blank = @display_blank.split
-        new_display_blank
-    end
 
-    def player_input_number
-        player_index_choice = gets.chomp.to_i
-        player_index_choice
-    end
 
-    def player_input_num_for_word
-        display_word[player_input_number]
-    end
 
-    def player_input_letter
-        player_letter_choice = gets.chomp
-        player_letter_choice
-    end
 
-    def total_display
-        
-
-    
 end
 
-game = HangmanGame.new
-p game.word_to_array
-puts game.display_word
-puts game.player_input_letter
 
-
-
-
-
+game = Hangman.new
+game.play

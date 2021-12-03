@@ -1,0 +1,72 @@
+require 'csv'
+
+
+
+class HangmanGame
+
+    def initialize #hidden word is only used to make a text range
+        # @display_blank = "_ " * secret_words.length
+        @guess_word = []
+        @display_blank = ""
+
+        @hidden_word = word_to_array.first.length.times do
+            @display_blank += "_ "
+        end
+    end
+
+    def secret_words
+        selector = File.readlines("random_text.txt")
+        secret_word = selector[rand(61404)]
+        secret_word.strip
+    end
+
+    def word_selection
+        if secret_words.length >=5 && secret_words.length <= 12
+            secret_words
+        else
+            "rhythm"
+        end
+    end
+
+    def word_to_array
+        new_word_array = word_selection.split(//)
+        @guess_word << new_word_array
+    end
+
+    def display_word(index,input_letter)
+        display_blank_array = @display_blank.split
+        display_blank_array[index] = input_letter
+        puts display_blank_array
+    end
+
+    def input_to_index(input_number)
+        input_number.to_i
+    end
+
+    def player_input_letter()
+
+    end
+
+    def play
+        p "choose a spot between #{(0..@hidden_word)}"
+        input_number = gets.chomp
+        p "choose a letter"
+        input_letter = gets.chomp
+        index = input_to_index(input_number)
+        display_word(index, input_letter)
+    end
+
+
+
+
+    
+end
+
+game = HangmanGame.new
+p game.word_to_array
+puts game.play
+
+
+
+
+
