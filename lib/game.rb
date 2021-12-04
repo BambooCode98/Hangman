@@ -15,11 +15,16 @@ class Hangman
         
 
     def word_bank
-        %w[the then buy pop ridge trough low high cold hot] #file text would go here
+        weather_words = File.readlines("word_list.txt", chomp: true) #file text would go here
+        weather_words
     end
 
-    def menu
-        #to be finished at the end
+    def save_game
+        # save
+    end
+
+    def load_game
+        #load may or may not be needed
     end
 
     def guesses(letter)
@@ -38,28 +43,43 @@ class Hangman
 
     def play
 
-        until @blank_spaces == @word do
-            # p @word
-            p @letter_bank
-            puts "Choose a letter: "
-            letter = gets.chomp
-
-            if @attempts > 0 
-                guesses(letter)
-                p "#{@blank_spaces}"
+        p "Type start to play Hangman or type quit to leave."
+        save_game = gets.chomp.downcase
+        if save_game == "start"
+            until @blank_spaces == @word do
+                # p @word
                 
-            else @attempts == 0
-                puts "game over"
+                p "Type save to save the game, or exit to exit: "
+                save_game = gets.chomp.downcase
+                exit_game = gets.chomp.downcase
+                if save_game == "save"
+                    p "saving..."
+                    p @letter_bank
+                    puts "Guess a letter: "
+                    letter = gets.chomp
+
+                    if @attempts > 0 
+                        guesses(letter)
+                        p "#{@blank_spaces}"
+                        
+                    else @attempts == 0
+                        puts "game over"
+                        p @word
+                        break
+                    end
+                else exit_game == "exit"
+                    p "goodbye"
+                    break
+                end
+                
             end
+        else start_game == "quit"
+            p "Goodbye"
         end
     end
-
-
-
-
-
 end
 
 
 game = Hangman.new
+# puts game.word_bank
 game.play
